@@ -1,4 +1,4 @@
-const toyButton = document.getElementById("create-toy")
+const toyForm = document.getElementById("toy-form")
 const toyList = document.getElementById("toy-list")
 let addToy = false;
 
@@ -16,15 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-function newToy() {
-  toyButton.addEventListener('click', (e) => {
-    e.preventDefault()
-    console.log("success?")
-  })
-}
-
-newToy()
 
 function renderToy(toy) {
   let card = document.createElement('li')
@@ -48,6 +39,7 @@ function renderToy(toy) {
     toy.likes++
     toyLikes.textContent = `${toy.likes} Likes`
     console.log(toy.likes)
+    updateLikes(toy)
   })
   toyButton.textContent = 'Like ❤️'
   card.appendChild(toyButton)
@@ -63,6 +55,45 @@ function getAllToys(){
 
 getAllToys()
 
-// innerHTML = `
-//   <img class="toy-avatar" src = "${toy.image}">
-//   `
+toyForm.addEventListener('submit', toySubmit)
+
+function toySubmit(e){
+  e.preventDefault()
+  console.log(e.target.image)
+  let toyObj = {
+    name: e.target.name.value,
+    image: e.target.image.value,
+    likes: 0
+  }
+  console.log(toyObj)
+  renderToy(toyObj)
+  createToy(toyObj)
+}
+
+function createToy(toyObj){
+  if (toyObj.name){
+  console.log(JSON.stringify(toyObj))
+  fetch('http://localhost:3000/toys',{
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(toyObj)
+  })
+  .then(res => res.json())
+  .then(toy => console.log(toy))
+  .catch((error) => {document.body.innerHTML(error)}
+)}else{console.log('nothing')}
+}
+
+function updateLikes(toyObj){
+  fetch(`http://localhost:3000/toys/${toyObj.id}`,{
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify(toyObj)
+  })
+  .then(res => res.json())
+  .then(toy => console.log(toy))
+}

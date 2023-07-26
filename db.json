@@ -47,6 +47,18 @@
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
       "likes": 1
+    },
+    {
+      "name": "Alexander Fischmann",
+      "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/4bceb48f-f741-4458-bdb7-9e2fc4fe9e76-profile_image-70x70.png",
+      "likes": 17,
+      "id": 9
+    },
+    {
+      "name": "Jessie",
+      "image": "https://upload.wikimedia.org/wikipedia/en/8/87/Jessie_%28Toy_Story%29.png",
+      "likes": 0,
+      "id": 10
     }
   ]
 }
