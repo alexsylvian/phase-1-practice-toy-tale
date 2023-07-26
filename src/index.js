@@ -29,16 +29,40 @@ newToy()
 function renderToy(toy) {
   let card = document.createElement('li')
   card.className = ('card')
-  card.innerHTML = `
-  <img src = "${toy.image}"
-  `
+
+  const toyHeader = document.createElement('h2')
+  toyHeader.textContent = toy.name
+  card.appendChild(toyHeader)
+
+  const toyImage = document.createElement('img')
+  toyImage.className = "toy-avatar"
+  toyImage.src = toy.image
+  card.appendChild(toyImage)
+
+  const toyLikes = document.createElement('p')
+  toyLikes.textContent = `${toy.likes} Likes`
+  card.appendChild(toyLikes)
+
+  const toyButton = document.createElement('button')
+  toyButton.addEventListener('click', () => {
+    toy.likes++
+    toyLikes.textContent = `${toy.likes} Likes`
+    console.log(toy.likes)
+  })
+  toyButton.textContent = 'Like ❤️'
+  card.appendChild(toyButton)
+
   toyList.appendChild(card)
 }
 
 function getAllToys(){
-  fetch(`http://localhost:3000/toys/2`)
+  fetch(`http://localhost:3000/toys`)
   .then(res => res.json())
-  .then(toys => renderToy(toys))
+  .then(toys => toys.forEach(toy => renderToy(toy)))
 }
 
 getAllToys()
+
+// innerHTML = `
+//   <img class="toy-avatar" src = "${toy.image}">
+//   `
